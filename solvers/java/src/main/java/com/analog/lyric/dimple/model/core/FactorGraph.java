@@ -39,6 +39,7 @@ import org.xml.sax.SAXException;
 import cern.colt.list.IntArrayList;
 
 import com.analog.lyric.collect.Tuple2;
+import com.analog.lyric.dimple.events.DimpleEventListener;
 import com.analog.lyric.dimple.exceptions.DimpleException;
 import com.analog.lyric.dimple.factorfunctions.Uniform;
 import com.analog.lyric.dimple.factorfunctions.core.CustomFactorFunctionWrapper;
@@ -106,6 +107,8 @@ public class FactorGraph extends FactorBase
 	private final ArrayList<FactorGraphStream> _factorGraphStreams = new ArrayList<FactorGraphStream>();
 	private int _numSteps = 1;
 	private boolean _numStepsInfinite = true;
+	
+	private volatile DimpleEventListener _eventListener = null;
 
 	//new identity related members
 	private final HashMap<String, Object> _name2object = new HashMap<String, Object>();
@@ -169,6 +172,26 @@ public class FactorGraph extends FactorBase
 		return "Graph";
 	}
 
+	/*-------------------
+	 * IDimpleEventSource
+	 */
+	
+	@Override
+	public FactorGraph getContainingGraph()
+	{
+		return this;
+	}
+	
+	@Override
+	public DimpleEventListener getEventListener()
+	{
+		return getRootGraph()._eventListener;
+	}
+	
+	public void setEventListener(DimpleEventListener listener)
+	{
+		_eventListener = listener;
+	}
 
 	/***************************************************************
 	 * 
