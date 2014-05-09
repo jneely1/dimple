@@ -732,4 +732,11 @@ public class SFactorGraph extends SFactorGraphBase //implements ISolverFactorGra
 	{
 		return false;
 	}
+
+	/*
+	 * 
+	 */
+	protected void doUpdateEdge(int edge)
+	{
+	}
 }
